@@ -8,13 +8,14 @@ export default function Home() {
   const [displayed, setDisplayed] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const indexRef = useRef(0);
+
   const fillDemo = () => {
     setResume(`Ali Khan
-Computer Science student with basic web development skills. Built small projects using HTML, CSS, and JavaScript. Interested in frontend development and problem solving.`);
-
+Computer Science student with basic web development skills. Built projects using HTML, CSS, and JavaScript. Interested in frontend development.`);
+    
     setJob(`Junior Frontend Developer
-
-We are looking for someone with HTML, CSS, JavaScript, and React knowledge. Must have problem-solving skills and teamwork ability.`);
+Looking for HTML, CSS, JavaScript, React. Must have teamwork and problem-solving skills.`);
   };
 
   const optimize = async () => {
@@ -45,8 +46,6 @@ We are looking for someone with HTML, CSS, JavaScript, and React knowledge. Must
     setLoading(false);
   };
 
-  const indexRef = useRef(0);
-
   useEffect(() => {
     if (!result) return;
 
@@ -60,7 +59,7 @@ We are looking for someone with HTML, CSS, JavaScript, and React knowledge. Must
       }
       setDisplayed((prev) => prev + result[indexRef.current]);
       indexRef.current++;
-    }, 8);
+    }, 6);
 
     return () => clearInterval(interval);
   }, [result]);
@@ -69,145 +68,98 @@ We are looking for someone with HTML, CSS, JavaScript, and React knowledge. Must
   const afterScore = result.match(/AFTER SCORE:\s*(\d+)/)?.[1] ?? "85";
 
   return (
-    <div style={{ fontFamily: "system-ui", background: "#f8fafc", color: "#0f172a" }}>
+    <div style={{ fontFamily: "system-ui", background: "#f1f5f9", minHeight: "100vh" }}>
       
-      {/* 🔥 HERO (UPGRADED) */}
-      <section style={{
+      {/* HERO */}
+      <div style={{
         textAlign: "center",
-        padding: "100px 20px 60px",
-        background: "linear-gradient(180deg,#f8fafc,#eef2ff)"
+        padding: "80px 20px",
+        background: "linear-gradient(180deg,#eef2ff,#f8fafc)"
       }}>
-        <h1 style={{
-          fontSize: "56px",
-          fontWeight: "800",
-          lineHeight: "1.1"
-        }}>
+        <h1 style={{ fontSize: "50px", fontWeight: "800" }}>
           Resume Optimizer
-          <span style={{
-            display: "block",
-            background: "linear-gradient(90deg,#6366f1,#7c3aed)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent"
-          }}>
-            Powered by AI
-          </span>
         </h1>
 
         <p style={{
-          marginTop: "18px",
-          fontSize: "18px",
+          marginTop: "12px",
           color: "#64748b",
           maxWidth: "600px",
           marginInline: "auto"
         }}>
-          Analyze your resume against any job description and instantly improve your chances of getting hired.
+          Improve your resume instantly with AI and increase your chances of getting hired.
         </p>
 
-        <button style={{
-          marginTop: "22px",
-          padding: "10px 22px",
-          background: "rgba(124,58,237,0.1)",
-          color: "#6d28d9",
-          border: "1px solid rgba(124,58,237,0.2)",
+        <button onClick={fillDemo} style={{
+          marginTop: "18px",
+          padding: "10px 20px",
+          background: "#6366f1",
+          color: "white",
+          border: "none",
           borderRadius: "999px",
-          fontWeight: "600",
-          backdropFilter: "blur(8px)"
+          cursor: "pointer"
         }}>
-          ⚡ Demo Mode
+          ⚡ Try Demo
         </button>
-      </section>
+      </div>
 
-      {/* MAIN CARD */}
-      <section style={{ maxWidth: "1100px", margin: "auto", padding: "20px" }}>
+      {/* MAIN */}
+      <div style={{ maxWidth: "1100px", margin: "auto", padding: "20px" }}>
+        
         <div style={{
           background: "white",
           padding: "25px",
-          borderRadius: "18px",
-          boxShadow: "0 10px 30px rgba(0,0,0,0.08)"
+          borderRadius: "16px",
+          boxShadow: "0 10px 25px rgba(0,0,0,0.08)"
         }}>
 
-          {/* HEADER */}
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <h3>Paste your content below</h3>
+          <h3 style={{ marginBottom: "15px" }}>Enter Details</h3>
 
-            <button onClick={fillDemo} style={{
-              padding: "8px 14px",
-              background: "#0ea5e9",
-              color: "white",
-              borderRadius: "8px",
-              border: "none"
-            }}>
-              ⚡ Load Example
-            </button>
-          </div>
+          <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
 
-          {/* INPUTS */}
-          <div style={{ display: "flex", gap: "20px", marginTop: "20px", flexWrap: "wrap" }}>
+            {/* RESUME */}
+            <textarea
+              placeholder="Paste your resume..."
+              value={resume}
+              onChange={(e) => setResume(e.target.value)}
+              style={{
+                flex: 1,
+                minWidth: "300px",
+                height: "180px",
+                padding: "12px",
+                borderRadius: "10px",
+                border: "1px solid #cbd5f5"
+              }}
+            />
 
-            <div style={{
-              flex: 1,
-              minWidth: "300px",
-              background: "#f8fafc",
-              borderRadius: "16px",
-              padding: "14px",
-              border: "1px solid #e2e8f0"
-            }}>
-              <div style={{ fontSize: "13px", color: "#64748b", marginBottom: "6px" }}>
-                📄 YOUR RESUME
-              </div>
-              <textarea
-                placeholder="Paste your resume here..."
-                value={resume}
-                onChange={(e) => setResume(e.target.value)}
-                style={{
-                  width: "100%",
-                  height: "180px",
-                  border: "none",
-                  outline: "none",
-                  background: "transparent"
-                }}
-              />
-            </div>
-
-            <div style={{
-              flex: 1,
-              minWidth: "300px",
-              background: "#f8fafc",
-              borderRadius: "16px",
-              padding: "14px",
-              border: "1px solid #e2e8f0"
-            }}>
-              <div style={{ fontSize: "13px", color: "#64748b", marginBottom: "6px" }}>
-                💼 JOB DESCRIPTION
-              </div>
-              <textarea
-                placeholder="Paste job description..."
-                value={job}
-                onChange={(e) => setJob(e.target.value)}
-                style={{
-                  width: "100%",
-                  height: "180px",
-                  border: "none",
-                  outline: "none",
-                  background: "transparent"
-                }}
-              />
-            </div>
+            {/* JOB */}
+            <textarea
+              placeholder="Paste job description..."
+              value={job}
+              onChange={(e) => setJob(e.target.value)}
+              style={{
+                flex: 1,
+                minWidth: "300px",
+                height: "180px",
+                padding: "12px",
+                borderRadius: "10px",
+                border: "1px solid #cbd5f5"
+              }}
+            />
           </div>
 
           {/* BUTTON */}
           <div style={{ textAlign: "center" }}>
             <button onClick={optimize} style={{
-              marginTop: "25px",
-              padding: "16px 40px",
+              marginTop: "20px",
+              padding: "14px 40px",
               background: "linear-gradient(90deg,#6366f1,#7c3aed)",
               color: "white",
-              borderRadius: "14px",
               border: "none",
+              borderRadius: "12px",
               fontWeight: "700",
-              boxShadow: "0 10px 25px rgba(99,102,241,0.4)"
+              cursor: "pointer"
             }}>
-              {loading ? "Processing..." : "⚡ Run AI Optimization →"}
+              {loading ? "Processing..." : "⚡ Optimize Resume"}
             </button>
           </div>
         </div>
@@ -218,23 +170,35 @@ We are looking for someone with HTML, CSS, JavaScript, and React knowledge. Must
             marginTop: "25px",
             background: "white",
             padding: "25px",
-            borderRadius: "18px",
-            boxShadow: "0 10px 30px rgba(0,0,0,0.08)"
+            borderRadius: "16px",
+            boxShadow: "0 10px 25px rgba(0,0,0,0.08)"
           }}>
-            <h2>ATS Score: {afterScore}/100</h2>
-            <p style={{ color: "#64748b" }}>Improved from {beforeScore}</p>
+            
+            {/* SCORE CARD */}
+            <div style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: "15px"
+            }}>
+              <h2>ATS Score: {afterScore}/100</h2>
+              <span style={{ color: "#64748b" }}>
+                Improved from {beforeScore}
+              </span>
+            </div>
 
+            {/* RESULT TEXT */}
             <pre style={{
-              marginTop: "15px",
-              background: "#f1f5f9",
+              background: "#f8fafc",
               padding: "15px",
-              borderRadius: "10px"
+              borderRadius: "10px",
+              whiteSpace: "pre-wrap"
             }}>
               {displayed}
             </pre>
           </div>
         )}
-      </section>
+      </div>
     </div>
   );
 }
