@@ -84,14 +84,16 @@ Looking for React, JavaScript, CSS, teamwork, and problem-solving skills.`);
       {/* HERO */}
       <div style={{
         textAlign: "center",
-        padding: "90px 20px 60px"
+        padding: "60px 16px 40px"
       }}>
         <h1 style={{
-          fontSize: "56px",
+          fontSize: "clamp(32px, 8vw, 56px)",
           fontWeight: "800",
           background: "linear-gradient(90deg,#6366f1,#7c3aed)",
           WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent"
+          WebkitTextFillColor: "transparent",
+          lineHeight: "1.2",
+          margin: "0 0 10px"
         }}>
           AI Resume Optimizer
         </h1>
@@ -99,7 +101,8 @@ Looking for React, JavaScript, CSS, teamwork, and problem-solving skills.`);
         <p style={{
           marginTop: "10px",
           color: "#64748b",
-          fontSize: "18px"
+          fontSize: "clamp(15px, 4vw, 18px)",
+          padding: "0 10px"
         }}>
           Beat ATS systems & get more interviews 🚀
         </p>
@@ -112,54 +115,65 @@ Looking for React, JavaScript, CSS, teamwork, and problem-solving skills.`);
           background: "#6366f1",
           color: "white",
           fontWeight: "600",
-          cursor: "pointer"
+          cursor: "pointer",
+          fontSize: "15px"
         }}>
           ⚡ Try Demo
         </button>
       </div>
 
       {/* MAIN CARD */}
-      <div style={{ maxWidth: "1100px", margin: "auto", padding: "20px" }}>
+      <div style={{ maxWidth: "1100px", margin: "auto", padding: "0 16px 20px" }}>
 
         <div style={{
           backdropFilter: "blur(10px)",
           background: "rgba(255,255,255,0.8)",
           borderRadius: "18px",
-          padding: "25px",
+          padding: "20px",
           boxShadow: "0 10px 30px rgba(0,0,0,0.08)"
         }}>
 
-          <h3 style={{ marginBottom: "15px" }}>Paste your data</h3>
+          <h3 style={{ marginBottom: "15px", marginTop: 0 }}>Paste your data</h3>
 
-          <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: "16px", flexDirection: "column" }}>
 
-            <textarea
-              placeholder="Your Resume..."
-              value={resume}
-              onChange={(e) => setResume(e.target.value)}
-              style={{
-                flex: 1,
-                minWidth: "300px",
-                height: "180px",
-                padding: "12px",
-                borderRadius: "12px",
-                border: "1px solid #e2e8f0"
-              }}
-            />
+            <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
+              <textarea
+                placeholder="Your Resume..."
+                value={resume}
+                onChange={(e) => setResume(e.target.value)}
+                style={{
+                  flex: 1,
+                  minWidth: "min(300px, 100%)",
+                  width: "100%",
+                  height: "180px",
+                  padding: "12px",
+                  borderRadius: "12px",
+                  border: "1px solid #e2e8f0",
+                  boxSizing: "border-box",
+                  fontSize: "14px",
+                  resize: "vertical"
+                }}
+              />
 
-            <textarea
-              placeholder="Job Description..."
-              value={job}
-              onChange={(e) => setJob(e.target.value)}
-              style={{
-                flex: 1,
-                minWidth: "300px",
-                height: "180px",
-                padding: "12px",
-                borderRadius: "12px",
-                border: "1px solid #e2e8f0"
-              }}
-            />
+              <textarea
+                placeholder="Job Description..."
+                value={job}
+                onChange={(e) => setJob(e.target.value)}
+                style={{
+                  flex: 1,
+                  minWidth: "min(300px, 100%)",
+                  width: "100%",
+                  height: "180px",
+                  padding: "12px",
+                  borderRadius: "12px",
+                  border: "1px solid #e2e8f0",
+                  boxSizing: "border-box",
+                  fontSize: "14px",
+                  resize: "vertical"
+                }}
+              />
+            </div>
           </div>
 
           <div style={{ textAlign: "center" }}>
@@ -172,7 +186,10 @@ Looking for React, JavaScript, CSS, teamwork, and problem-solving skills.`);
               color: "white",
               background: "linear-gradient(90deg,#6366f1,#7c3aed)",
               cursor: "pointer",
-              boxShadow: "0 10px 20px rgba(99,102,241,0.4)"
+              boxShadow: "0 10px 20px rgba(99,102,241,0.4)",
+              fontSize: "16px",
+              width: "100%",
+              maxWidth: "320px"
             }}>
               {loading ? "Processing..." : "⚡ Optimize Resume"}
             </button>
@@ -184,7 +201,7 @@ Looking for React, JavaScript, CSS, teamwork, and problem-solving skills.`);
           <div style={{
             marginTop: "25px",
             background: "white",
-            padding: "25px",
+            padding: "20px",
             borderRadius: "18px",
             boxShadow: "0 10px 30px rgba(0,0,0,0.08)"
           }}>
@@ -193,12 +210,13 @@ Looking for React, JavaScript, CSS, teamwork, and problem-solving skills.`);
             <div style={{
               display: "flex",
               alignItems: "center",
-              gap: "30px",
-              flexWrap: "wrap"
+              gap: "20px",
+              flexWrap: "wrap",
+              justifyContent: "center"
             }}>
 
               {/* CHART */}
-              <div style={{ position: "relative", width: "140px", height: "140px" }}>
+              <div style={{ position: "relative", width: "140px", height: "140px", flexShrink: 0 }}>
                 <svg width="140" height="140">
                   <circle
                     cx="70"
@@ -243,9 +261,9 @@ Looking for React, JavaScript, CSS, teamwork, and problem-solving skills.`);
               </div>
 
               {/* TEXT */}
-              <div>
-                <h2>ATS Score: {afterScore}/100</h2>
-                <p style={{ color: "#64748b" }}>
+              <div style={{ textAlign: "center" }}>
+                <h2 style={{ margin: "0 0 6px" }}>ATS Score: {afterScore}/100</h2>
+                <p style={{ color: "#64748b", margin: 0 }}>
                   Improved from {beforeScore}
                 </p>
               </div>
@@ -257,13 +275,200 @@ Looking for React, JavaScript, CSS, teamwork, and problem-solving skills.`);
               background: "#f8fafc",
               padding: "15px",
               borderRadius: "12px",
-              whiteSpace: "pre-wrap"
+              whiteSpace: "pre-wrap",
+              fontSize: "clamp(12px, 3.5vw, 14px)",
+              overflowX: "auto",
+              wordBreak: "break-word"
             }}>
               {displayed}
             </pre>
           </div>
         )}
       </div>
+
+      {/* ───────────────── HOW IT WORKS ───────────────── */}
+      <div style={{
+        maxWidth: "1100px",
+        margin: "40px auto 0",
+        padding: "0 16px 20px"
+      }}>
+        <div style={{
+          background: "white",
+          borderRadius: "18px",
+          padding: "30px 20px",
+          boxShadow: "0 10px 30px rgba(0,0,0,0.08)"
+        }}>
+          <h2 style={{
+            textAlign: "center",
+            fontSize: "clamp(22px, 5vw, 30px)",
+            fontWeight: "800",
+            background: "linear-gradient(90deg,#6366f1,#7c3aed)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            marginTop: 0,
+            marginBottom: "30px"
+          }}>
+            How It Works
+          </h2>
+
+          <div style={{
+            display: "flex",
+            gap: "20px",
+            flexWrap: "wrap",
+            justifyContent: "center"
+          }}>
+            {[
+              { step: "1", icon: "📋", title: "Paste Your Resume", desc: "Copy and paste your current resume text into the input field." },
+              { step: "2", icon: "🎯", title: "Add Job Description", desc: "Paste the job listing you want to apply for." },
+              { step: "3", icon: "⚡", title: "AI Analyzes", desc: "Our AI scans for keyword matches and ATS compatibility." },
+              { step: "4", icon: "✅", title: "Get Optimized", desc: "Receive a tailored resume with improved ATS score." },
+            ].map((item) => (
+              <div key={item.step} style={{
+                flex: "1",
+                minWidth: "200px",
+                maxWidth: "240px",
+                textAlign: "center",
+                padding: "20px 16px",
+                borderRadius: "14px",
+                background: "#f8fafc",
+                border: "1px solid #e2e8f0"
+              }}>
+                <div style={{ fontSize: "32px", marginBottom: "10px" }}>{item.icon}</div>
+                <div style={{
+                  display: "inline-block",
+                  background: "linear-gradient(90deg,#6366f1,#7c3aed)",
+                  color: "white",
+                  borderRadius: "999px",
+                  width: "24px",
+                  height: "24px",
+                  lineHeight: "24px",
+                  fontSize: "13px",
+                  fontWeight: "700",
+                  marginBottom: "8px"
+                }}>
+                  {item.step}
+                </div>
+                <h4 style={{ margin: "8px 0 6px", fontSize: "16px" }}>{item.title}</h4>
+                <p style={{ margin: 0, color: "#64748b", fontSize: "14px", lineHeight: "1.5" }}>{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ───────────────── FEATURES ───────────────── */}
+      <div style={{
+        maxWidth: "1100px",
+        margin: "30px auto 0",
+        padding: "0 16px 20px"
+      }}>
+        <div style={{
+          background: "linear-gradient(135deg,#6366f1,#7c3aed)",
+          borderRadius: "18px",
+          padding: "30px 20px",
+          boxShadow: "0 10px 30px rgba(99,102,241,0.3)"
+        }}>
+          <h2 style={{
+            textAlign: "center",
+            fontSize: "clamp(22px, 5vw, 30px)",
+            fontWeight: "800",
+            color: "white",
+            marginTop: 0,
+            marginBottom: "24px"
+          }}>
+            Why Use AI Resume Optimizer?
+          </h2>
+
+          <div style={{
+            display: "flex",
+            gap: "16px",
+            flexWrap: "wrap",
+            justifyContent: "center"
+          }}>
+            {[
+              { icon: "🤖", title: "AI-Powered", desc: "Smart keyword matching tailored to each job" },
+              { icon: "📊", title: "ATS Score", desc: "Know your chances before you apply" },
+              { icon: "⚡", title: "Instant Results", desc: "Optimize in seconds, not hours" },
+              { icon: "🔒", title: "Private & Secure", desc: "Your data is never stored" },
+              { icon: "🌍", title: "Any Industry", desc: "Works for all job types and fields" },
+              { icon: "💡", title: "Tips Included", desc: "Actionable suggestions to improve further" },
+            ].map((f) => (
+              <div key={f.title} style={{
+                flex: "1",
+                minWidth: "150px",
+                maxWidth: "180px",
+                background: "rgba(255,255,255,0.15)",
+                borderRadius: "14px",
+                padding: "18px 14px",
+                textAlign: "center",
+                backdropFilter: "blur(6px)"
+              }}>
+                <div style={{ fontSize: "28px", marginBottom: "8px" }}>{f.icon}</div>
+                <h4 style={{ color: "white", margin: "0 0 6px", fontSize: "15px" }}>{f.title}</h4>
+                <p style={{ color: "rgba(255,255,255,0.8)", margin: 0, fontSize: "13px", lineHeight: "1.4" }}>{f.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ───────────────── FAQ ───────────────── */}
+      <div style={{
+        maxWidth: "1100px",
+        margin: "30px auto 0",
+        padding: "0 16px 20px"
+      }}>
+        <div style={{
+          background: "white",
+          borderRadius: "18px",
+          padding: "30px 20px",
+          boxShadow: "0 10px 30px rgba(0,0,0,0.08)"
+        }}>
+          <h2 style={{
+            textAlign: "center",
+            fontSize: "clamp(22px, 5vw, 30px)",
+            fontWeight: "800",
+            background: "linear-gradient(90deg,#6366f1,#7c3aed)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            marginTop: 0,
+            marginBottom: "24px"
+          }}>
+            Frequently Asked Questions
+          </h2>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "14px", maxWidth: "720px", margin: "0 auto" }}>
+            {[
+              { q: "What is an ATS score?", a: "ATS stands for Applicant Tracking System. Most companies use ATS software to filter resumes before a human ever sees them. Your ATS score measures how well your resume matches the job description." },
+              { q: "Is my resume data saved?", a: "No. Your resume and job description are only used to generate the optimized result and are never stored on our servers." },
+              { q: "How accurate is the AI optimization?", a: "Our AI uses advanced keyword analysis to match your resume to the job description. While no tool guarantees a job, optimized resumes statistically perform better in ATS filters." },
+              { q: "Can I use this for any job type?", a: "Yes! Whether you're applying for tech, marketing, finance, healthcare, or any other field, the optimizer works by matching your resume to any job description you provide." },
+            ].map((faq, i) => (
+              <div key={i} style={{
+                padding: "16px 18px",
+                borderRadius: "12px",
+                background: "#f8fafc",
+                border: "1px solid #e2e8f0"
+              }}>
+                <h4 style={{ margin: "0 0 8px", fontSize: "15px", color: "#1e293b" }}>❓ {faq.q}</h4>
+                <p style={{ margin: 0, color: "#64748b", fontSize: "14px", lineHeight: "1.6" }}>{faq.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ───────────────── FOOTER ───────────────── */}
+      <div style={{
+        textAlign: "center",
+        padding: "40px 16px 30px",
+        color: "#94a3b8",
+        fontSize: "14px"
+      }}>
+        <p style={{ margin: 0 }}>© {new Date().getFullYear()} AI Resume Optimizer. All rights reserved.</p>
+        <p style={{ margin: "6px 0 0" }}>Built with ❤️ to help you land your dream job.</p>
+      </div>
+
     </div>
   );
 }
