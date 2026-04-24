@@ -12,10 +12,10 @@ export default function Home() {
 
   const fillDemo = () => {
     setResume(`Ali Khan
-Computer Science student with basic web development skills. Built projects using HTML, CSS, and JavaScript. Interested in frontend development.`);
+Computer Science student with basic web development skills. Built projects using HTML, CSS, and JavaScript.`);
     
     setJob(`Junior Frontend Developer
-Looking for HTML, CSS, JavaScript, React. Must have teamwork and problem-solving skills.`);
+Looking for HTML, CSS, JavaScript, React.`);
   };
 
   const optimize = async () => {
@@ -64,8 +64,13 @@ Looking for HTML, CSS, JavaScript, React. Must have teamwork and problem-solving
     return () => clearInterval(interval);
   }, [result]);
 
-  const beforeScore = result.match(/BEFORE SCORE:\s*(\d+)/)?.[1] ?? "60";
-  const afterScore = result.match(/AFTER SCORE:\s*(\d+)/)?.[1] ?? "85";
+  const beforeScore = Number(result.match(/BEFORE SCORE:\s*(\d+)/)?.[1] ?? 60);
+  const afterScore = Number(result.match(/AFTER SCORE:\s*(\d+)/)?.[1] ?? 85);
+
+  // 🎯 PIE CHART LOGIC
+  const radius = 60;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - (afterScore / 100) * circumference;
 
   return (
     <div style={{ fontFamily: "system-ui", background: "#f1f5f9", minHeight: "100vh" }}>
@@ -86,7 +91,7 @@ Looking for HTML, CSS, JavaScript, React. Must have teamwork and problem-solving
           maxWidth: "600px",
           marginInline: "auto"
         }}>
-          Improve your resume instantly with AI and increase your chances of getting hired.
+          Improve your resume instantly with AI.
         </p>
 
         <button onClick={fillDemo} style={{
@@ -95,8 +100,7 @@ Looking for HTML, CSS, JavaScript, React. Must have teamwork and problem-solving
           background: "#6366f1",
           color: "white",
           border: "none",
-          borderRadius: "999px",
-          cursor: "pointer"
+          borderRadius: "999px"
         }}>
           ⚡ Try Demo
         </button>
@@ -112,13 +116,12 @@ Looking for HTML, CSS, JavaScript, React. Must have teamwork and problem-solving
           boxShadow: "0 10px 25px rgba(0,0,0,0.08)"
         }}>
 
-          <h3 style={{ marginBottom: "15px" }}>Enter Details</h3>
+          <h3>Enter Details</h3>
 
-          <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: "20px", flexWrap: "wrap", marginTop: "15px" }}>
 
-            {/* RESUME */}
             <textarea
-              placeholder="Paste your resume..."
+              placeholder="Resume..."
               value={resume}
               onChange={(e) => setResume(e.target.value)}
               style={{
@@ -127,13 +130,12 @@ Looking for HTML, CSS, JavaScript, React. Must have teamwork and problem-solving
                 height: "180px",
                 padding: "12px",
                 borderRadius: "10px",
-                border: "1px solid #cbd5f5"
+                border: "1px solid #ddd"
               }}
             />
 
-            {/* JOB */}
             <textarea
-              placeholder="Paste job description..."
+              placeholder="Job description..."
               value={job}
               onChange={(e) => setJob(e.target.value)}
               style={{
@@ -142,12 +144,11 @@ Looking for HTML, CSS, JavaScript, React. Must have teamwork and problem-solving
                 height: "180px",
                 padding: "12px",
                 borderRadius: "10px",
-                border: "1px solid #cbd5f5"
+                border: "1px solid #ddd"
               }}
             />
           </div>
 
-          {/* BUTTON */}
           <div style={{ textAlign: "center" }}>
             <button onClick={optimize} style={{
               marginTop: "20px",
@@ -156,8 +157,7 @@ Looking for HTML, CSS, JavaScript, React. Must have teamwork and problem-solving
               color: "white",
               border: "none",
               borderRadius: "12px",
-              fontWeight: "700",
-              cursor: "pointer"
+              fontWeight: "700"
             }}>
               {loading ? "Processing..." : "⚡ Optimize Resume"}
             </button>
@@ -174,21 +174,64 @@ Looking for HTML, CSS, JavaScript, React. Must have teamwork and problem-solving
             boxShadow: "0 10px 25px rgba(0,0,0,0.08)"
           }}>
             
-            {/* SCORE CARD */}
+            {/* SCORE + CHART */}
             <div style={{
               display: "flex",
-              justifyContent: "space-between",
               alignItems: "center",
-              marginBottom: "15px"
+              gap: "30px",
+              flexWrap: "wrap"
             }}>
-              <h2>ATS Score: {afterScore}/100</h2>
-              <span style={{ color: "#64748b" }}>
-                Improved from {beforeScore}
-              </span>
+              
+              {/* PIE CHART */}
+              <div style={{ position: "relative", width: "150px", height: "150px" }}>
+                <svg width="150" height="150">
+                  <circle
+                    cx="75"
+                    cy="75"
+                    r={radius}
+                    stroke="#e2e8f0"
+                    strokeWidth="12"
+                    fill="none"
+                  />
+                  <circle
+                    cx="75"
+                    cy="75"
+                    r={radius}
+                    stroke="#6366f1"
+                    strokeWidth="12"
+                    fill="none"
+                    strokeDasharray={circumference}
+                    strokeDashoffset={offset}
+                    strokeLinecap="round"
+                    transform="rotate(-90 75 75)"
+                    style={{ transition: "stroke-dashoffset 1s ease" }}
+                  />
+                </svg>
+
+                <div style={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  fontWeight: "700",
+                  fontSize: "20px"
+                }}>
+                  {afterScore}%
+                </div>
+              </div>
+
+              {/* TEXT */}
+              <div>
+                <h2>ATS Score: {afterScore}/100</h2>
+                <p style={{ color: "#64748b" }}>
+                  Improved from {beforeScore}
+                </p>
+              </div>
             </div>
 
             {/* RESULT TEXT */}
             <pre style={{
+              marginTop: "20px",
               background: "#f8fafc",
               padding: "15px",
               borderRadius: "10px",
