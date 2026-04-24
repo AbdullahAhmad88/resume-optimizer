@@ -1,6 +1,6 @@
 {
   "name": "resume-optimizer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "next": "15.0.0",
+    "next": "14.2.5",
     "openai": "^6.34.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
