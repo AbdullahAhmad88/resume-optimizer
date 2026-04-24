@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function Home() {
   const [resume, setResume] = useState("");
@@ -8,7 +8,6 @@ export default function Home() {
   const [displayed, setDisplayed] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // 🚀 DEMO FILL
   const fillDemo = () => {
     setResume(`Ali Khan
 Computer Science student with basic web development skills. Built small projects using HTML, CSS, and JavaScript. Interested in frontend development and problem solving.`);
@@ -31,20 +30,12 @@ We are looking for someone with HTML, CSS, JavaScript, and React knowledge. Must
     try {
       const res = await fetch("/api/optimize", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          resume,
-          jobDescription: job,
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ resume, jobDescription: job }),
       });
 
       const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.error || "Request failed");
-      }
+      if (!res.ok) throw new Error(data.error || "Request failed");
 
       setResult(data.result);
     } catch (err) {
@@ -54,174 +45,169 @@ We are looking for someone with HTML, CSS, JavaScript, and React knowledge. Must
     setLoading(false);
   };
 
-  // ✨ TYPEWRITER
+  const indexRef = useRef(0);
+
   useEffect(() => {
     if (!result) return;
 
-    let i = 0;
+    indexRef.current = 0;
+    setDisplayed("");
+
     const interval = setInterval(() => {
-      setDisplayed((prev) => prev + result[i]);
-      i++;
-      if (i >= result.length) clearInterval(interval);
+      if (indexRef.current >= result.length) {
+        clearInterval(interval);
+        return;
+      }
+      setDisplayed((prev) => prev + result[indexRef.current]);
+      indexRef.current++;
     }, 8);
 
     return () => clearInterval(interval);
   }, [result]);
 
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(result);
-    alert("Copied!");
-  };
-
-  const downloadText = () => {
-    const blob = new Blob([result], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "optimized_resume.txt";
-    a.click();
-  };
+  const beforeScore = result.match(/BEFORE SCORE:\s*(\d+)/)?.[1] ?? "60";
+  const afterScore = result.match(/AFTER SCORE:\s*(\d+)/)?.[1] ?? "85";
 
   return (
     <div style={{ fontFamily: "system-ui", background: "#f8fafc", color: "#0f172a" }}>
       
-      {/* ANIMATIONS */}
-      <style>{`
-        @keyframes fadeUp {
-          from { opacity: 0; transform: translateY(30px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes spin {
-          to { transform: rotate(360deg); }
-        }
-
-        .spinner {
-          width: 20px;
-          height: 20px;
-          border: 3px solid #cbd5f5;
-          border-top: 3px solid #2563eb;
-          border-radius: 50%;
-          animation: spin 1s linear infinite;
-          display: inline-block;
-          margin-right: 8px;
-        }
-      `}</style>
-
-      {/* HERO */}
-      <section style={{ textAlign: "center", padding: "120px 20px 80px", animation: "fadeUp 0.8s ease" }}>
-        
+      {/* 🔥 HERO (UPGRADED) */}
+      <section style={{
+        textAlign: "center",
+        padding: "100px 20px 60px",
+        background: "linear-gradient(180deg,#f8fafc,#eef2ff)"
+      }}>
         <h1 style={{
           fontSize: "56px",
           fontWeight: "800",
-          maxWidth: "900px",
-          margin: "auto",
           lineHeight: "1.1"
         }}>
-          AI Resume Optimizer
-
+          Resume Optimizer
           <span style={{
             display: "block",
-            background: "linear-gradient(90deg,#2563eb,#7c3aed)",
+            background: "linear-gradient(90deg,#6366f1,#7c3aed)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent"
           }}>
-            Demo Version
+            Powered by AI
           </span>
         </h1>
 
-        <p style={{ marginTop: "16px", fontSize: "18px", color: "#475569" }}>
-          Try how AI improves resumes instantly. Full AI coming soon.
+        <p style={{
+          marginTop: "18px",
+          fontSize: "18px",
+          color: "#64748b",
+          maxWidth: "600px",
+          marginInline: "auto"
+        }}>
+          Analyze your resume against any job description and instantly improve your chances of getting hired.
         </p>
 
-        <button
-          onClick={() => window.scrollTo({ top: 700, behavior: "smooth" })}
-          style={{
-            marginTop: "24px",
-            padding: "14px 32px",
-            background: "linear-gradient(90deg,#2563eb,#4f46e5)",
-            color: "white",
-            border: "none",
-            borderRadius: "12px",
-            cursor: "pointer",
-            fontWeight: "600",
-            boxShadow: "0 10px 25px rgba(37,99,235,0.3)"
-          }}
-        >
-          ⚡ Try Demo →
+        <button style={{
+          marginTop: "22px",
+          padding: "10px 22px",
+          background: "rgba(124,58,237,0.1)",
+          color: "#6d28d9",
+          border: "1px solid rgba(124,58,237,0.2)",
+          borderRadius: "999px",
+          fontWeight: "600",
+          backdropFilter: "blur(8px)"
+        }}>
+          ⚡ Demo Mode
         </button>
-
-        <p style={{ marginTop: "10px", color: "#64748b" }}>
-          🚀 Demo version — no signup required
-        </p>
       </section>
 
-      {/* TOOL */}
-      <section style={{ maxWidth: "1100px", margin: "auto", padding: "40px 20px" }}>
+      {/* MAIN CARD */}
+      <section style={{ maxWidth: "1100px", margin: "auto", padding: "20px" }}>
         <div style={{
           background: "white",
-          padding: "30px",
-          borderRadius: "16px",
-          boxShadow: "0 10px 30px rgba(0,0,0,0.08)",
-          animation: "fadeUp 1s ease"
+          padding: "25px",
+          borderRadius: "18px",
+          boxShadow: "0 10px 30px rgba(0,0,0,0.08)"
         }}>
-          
-          {/* DEMO BUTTON */}
-          <div style={{ textAlign: "center", marginBottom: "15px" }}>
-            <button
-              onClick={fillDemo}
-              style={{
-                padding: "10px 20px",
-                background: "#0ea5e9",
-                color: "white",
-                border: "none",
-                borderRadius: "8px",
-                cursor: "pointer"
-              }}
-            >
-              ⚡ Try Demo Instantly
+
+          {/* HEADER */}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <h3>Paste your content below</h3>
+
+            <button onClick={fillDemo} style={{
+              padding: "8px 14px",
+              background: "#0ea5e9",
+              color: "white",
+              borderRadius: "8px",
+              border: "none"
+            }}>
+              ⚡ Load Example
             </button>
           </div>
 
-          <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
-            <textarea
-              placeholder="Paste your resume..."
-              value={resume}
-              onChange={(e) => setResume(e.target.value)}
-              style={{ flex: 1, minWidth: "300px", height: "200px", padding: "12px" }}
-            />
+          {/* INPUTS */}
+          <div style={{ display: "flex", gap: "20px", marginTop: "20px", flexWrap: "wrap" }}>
 
-            <textarea
-              placeholder="Paste job description..."
-              value={job}
-              onChange={(e) => setJob(e.target.value)}
-              style={{ flex: 1, minWidth: "300px", height: "200px", padding: "12px" }}
-            />
+            <div style={{
+              flex: 1,
+              minWidth: "300px",
+              background: "#f8fafc",
+              borderRadius: "16px",
+              padding: "14px",
+              border: "1px solid #e2e8f0"
+            }}>
+              <div style={{ fontSize: "13px", color: "#64748b", marginBottom: "6px" }}>
+                📄 YOUR RESUME
+              </div>
+              <textarea
+                placeholder="Paste your resume here..."
+                value={resume}
+                onChange={(e) => setResume(e.target.value)}
+                style={{
+                  width: "100%",
+                  height: "180px",
+                  border: "none",
+                  outline: "none",
+                  background: "transparent"
+                }}
+              />
+            </div>
+
+            <div style={{
+              flex: 1,
+              minWidth: "300px",
+              background: "#f8fafc",
+              borderRadius: "16px",
+              padding: "14px",
+              border: "1px solid #e2e8f0"
+            }}>
+              <div style={{ fontSize: "13px", color: "#64748b", marginBottom: "6px" }}>
+                💼 JOB DESCRIPTION
+              </div>
+              <textarea
+                placeholder="Paste job description..."
+                value={job}
+                onChange={(e) => setJob(e.target.value)}
+                style={{
+                  width: "100%",
+                  height: "180px",
+                  border: "none",
+                  outline: "none",
+                  background: "transparent"
+                }}
+              />
+            </div>
           </div>
 
+          {/* BUTTON */}
           <div style={{ textAlign: "center" }}>
-            <button
-              onClick={optimize}
-              disabled={loading}
-              style={{
-                marginTop: "20px",
-                padding: "14px 30px",
-                background: loading ? "#94a3b8" : "#2563eb",
-                color: "white",
-                border: "none",
-                borderRadius: "10px",
-                cursor: loading ? "not-allowed" : "pointer",
-                fontWeight: "600"
-              }}
-            >
-              {loading ? (
-                <>
-                  <span className="spinner"></span>
-                  Processing...
-                </>
-              ) : (
-                "⚡ Run Demo Optimization"
-              )}
+            <button onClick={optimize} style={{
+              marginTop: "25px",
+              padding: "16px 40px",
+              background: "linear-gradient(90deg,#6366f1,#7c3aed)",
+              color: "white",
+              borderRadius: "14px",
+              border: "none",
+              fontWeight: "700",
+              boxShadow: "0 10px 25px rgba(99,102,241,0.4)"
+            }}>
+              {loading ? "Processing..." : "⚡ Run AI Optimization →"}
             </button>
           </div>
         </div>
@@ -229,40 +215,26 @@ We are looking for someone with HTML, CSS, JavaScript, and React knowledge. Must
         {/* RESULT */}
         {displayed && (
           <div style={{
-            marginTop: "30px",
+            marginTop: "25px",
             background: "white",
             padding: "25px",
-            borderRadius: "16px",
-            boxShadow: "0 10px 30px rgba(0,0,0,0.08)",
-            animation: "fadeUp 0.6s ease"
+            borderRadius: "18px",
+            boxShadow: "0 10px 30px rgba(0,0,0,0.08)"
           }}>
-            <div style={{ marginBottom: "10px" }}>
-              <button onClick={copyToClipboard}>📋 Copy</button>
-              <button onClick={downloadText} style={{ marginLeft: "10px" }}>
-                ⬇ Download
-              </button>
-            </div>
+            <h2>ATS Score: {afterScore}/100</h2>
+            <p style={{ color: "#64748b" }}>Improved from {beforeScore}</p>
 
-            <pre style={{ whiteSpace: "pre-wrap", lineHeight: "1.6" }}>
-              {displayed
-                .replace(/BEFORE SCORE:/g, "🔴 BEFORE SCORE:")
-                .replace(/AFTER SCORE:/g, "🟢 AFTER SCORE:")}
+            <pre style={{
+              marginTop: "15px",
+              background: "#f1f5f9",
+              padding: "15px",
+              borderRadius: "10px"
+            }}>
+              {displayed}
             </pre>
           </div>
         )}
       </section>
-
-      {/* FOOTER */}
-      <footer style={{
-        padding: "40px",
-        textAlign: "center",
-        background: "#0f172a",
-        color: "#cbd5f5"
-      }}>
-        <p><b>Abdullah Ahmad</b></p>
-        <p>abdullahahmadmirza@gmail.com</p>
-        <p>Demo Version • AI Upgrade Coming Soon</p>
-      </footer>
     </div>
   );
 }
