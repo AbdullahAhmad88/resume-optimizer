@@ -12,15 +12,15 @@ export default function Home() {
 
   const fillDemo = () => {
     setResume(`Ali Khan
-Computer Science student with basic web development skills. Built projects using HTML, CSS, and JavaScript.`);
-    
-    setJob(`Junior Frontend Developer
-Looking for HTML, CSS, JavaScript, React.`);
+Computer Science student with frontend experience. Built responsive websites using HTML, CSS, JavaScript and React.`);
+
+    setJob(`Frontend Developer
+Looking for React, JavaScript, CSS, teamwork, and problem-solving skills.`);
   };
 
   const optimize = async () => {
     if (!resume.trim() || !job.trim()) {
-      setResult("❌ Please enter both resume and job description");
+      setResult("❌ Please enter both fields");
       return;
     }
 
@@ -46,6 +46,7 @@ Looking for HTML, CSS, JavaScript, React.`);
     setLoading(false);
   };
 
+  // ✨ TYPEWRITER EFFECT
   useEffect(() => {
     if (!result) return;
 
@@ -59,7 +60,7 @@ Looking for HTML, CSS, JavaScript, React.`);
       }
       setDisplayed((prev) => prev + result[indexRef.current]);
       indexRef.current++;
-    }, 6);
+    }, 5);
 
     return () => clearInterval(interval);
   }, [result]);
@@ -67,61 +68,73 @@ Looking for HTML, CSS, JavaScript, React.`);
   const beforeScore = Number(result.match(/BEFORE SCORE:\s*(\d+)/)?.[1] ?? 60);
   const afterScore = Number(result.match(/AFTER SCORE:\s*(\d+)/)?.[1] ?? 85);
 
-  // 🎯 PIE CHART LOGIC
-  const radius = 60;
+  // 🔥 PIE CHART (FIXED + SMOOTH)
+  const radius = 55;
   const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (afterScore / 100) * circumference;
+  const progress = Math.min(Math.max(afterScore, 0), 100);
+  const offset = circumference - (progress / 100) * circumference;
 
   return (
-    <div style={{ fontFamily: "system-ui", background: "#f1f5f9", minHeight: "100vh" }}>
-      
+    <div style={{
+      fontFamily: "system-ui",
+      background: "linear-gradient(135deg,#eef2ff,#f8fafc)",
+      minHeight: "100vh"
+    }}>
+
       {/* HERO */}
       <div style={{
         textAlign: "center",
-        padding: "80px 20px",
-        background: "linear-gradient(180deg,#eef2ff,#f8fafc)"
+        padding: "90px 20px 60px"
       }}>
-        <h1 style={{ fontSize: "50px", fontWeight: "800" }}>
-          Resume Optimizer
+        <h1 style={{
+          fontSize: "56px",
+          fontWeight: "800",
+          background: "linear-gradient(90deg,#6366f1,#7c3aed)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent"
+        }}>
+          AI Resume Optimizer
         </h1>
 
         <p style={{
-          marginTop: "12px",
+          marginTop: "10px",
           color: "#64748b",
-          maxWidth: "600px",
-          marginInline: "auto"
+          fontSize: "18px"
         }}>
-          Improve your resume instantly with AI.
+          Beat ATS systems & get more interviews 🚀
         </p>
 
         <button onClick={fillDemo} style={{
-          marginTop: "18px",
-          padding: "10px 20px",
+          marginTop: "20px",
+          padding: "10px 22px",
+          borderRadius: "999px",
+          border: "none",
           background: "#6366f1",
           color: "white",
-          border: "none",
-          borderRadius: "999px"
+          fontWeight: "600",
+          cursor: "pointer"
         }}>
           ⚡ Try Demo
         </button>
       </div>
 
-      {/* MAIN */}
+      {/* MAIN CARD */}
       <div style={{ maxWidth: "1100px", margin: "auto", padding: "20px" }}>
-        
+
         <div style={{
-          background: "white",
+          backdropFilter: "blur(10px)",
+          background: "rgba(255,255,255,0.8)",
+          borderRadius: "18px",
           padding: "25px",
-          borderRadius: "16px",
-          boxShadow: "0 10px 25px rgba(0,0,0,0.08)"
+          boxShadow: "0 10px 30px rgba(0,0,0,0.08)"
         }}>
 
-          <h3>Enter Details</h3>
+          <h3 style={{ marginBottom: "15px" }}>Paste your data</h3>
 
-          <div style={{ display: "flex", gap: "20px", flexWrap: "wrap", marginTop: "15px" }}>
+          <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
 
             <textarea
-              placeholder="Resume..."
+              placeholder="Your Resume..."
               value={resume}
               onChange={(e) => setResume(e.target.value)}
               style={{
@@ -129,13 +142,13 @@ Looking for HTML, CSS, JavaScript, React.`);
                 minWidth: "300px",
                 height: "180px",
                 padding: "12px",
-                borderRadius: "10px",
-                border: "1px solid #ddd"
+                borderRadius: "12px",
+                border: "1px solid #e2e8f0"
               }}
             />
 
             <textarea
-              placeholder="Job description..."
+              placeholder="Job Description..."
               value={job}
               onChange={(e) => setJob(e.target.value)}
               style={{
@@ -143,8 +156,8 @@ Looking for HTML, CSS, JavaScript, React.`);
                 minWidth: "300px",
                 height: "180px",
                 padding: "12px",
-                borderRadius: "10px",
-                border: "1px solid #ddd"
+                borderRadius: "12px",
+                border: "1px solid #e2e8f0"
               }}
             />
           </div>
@@ -153,11 +166,13 @@ Looking for HTML, CSS, JavaScript, React.`);
             <button onClick={optimize} style={{
               marginTop: "20px",
               padding: "14px 40px",
-              background: "linear-gradient(90deg,#6366f1,#7c3aed)",
-              color: "white",
-              border: "none",
               borderRadius: "12px",
-              fontWeight: "700"
+              border: "none",
+              fontWeight: "700",
+              color: "white",
+              background: "linear-gradient(90deg,#6366f1,#7c3aed)",
+              cursor: "pointer",
+              boxShadow: "0 10px 20px rgba(99,102,241,0.4)"
             }}>
               {loading ? "Processing..." : "⚡ Optimize Resume"}
             </button>
@@ -170,42 +185,49 @@ Looking for HTML, CSS, JavaScript, React.`);
             marginTop: "25px",
             background: "white",
             padding: "25px",
-            borderRadius: "16px",
-            boxShadow: "0 10px 25px rgba(0,0,0,0.08)"
+            borderRadius: "18px",
+            boxShadow: "0 10px 30px rgba(0,0,0,0.08)"
           }}>
-            
-            {/* SCORE + CHART */}
+
+            {/* SCORE */}
             <div style={{
               display: "flex",
               alignItems: "center",
               gap: "30px",
               flexWrap: "wrap"
             }}>
-              
-              {/* PIE CHART */}
-              <div style={{ position: "relative", width: "150px", height: "150px" }}>
-                <svg width="150" height="150">
+
+              {/* CHART */}
+              <div style={{ position: "relative", width: "140px", height: "140px" }}>
+                <svg width="140" height="140">
                   <circle
-                    cx="75"
-                    cy="75"
+                    cx="70"
+                    cy="70"
                     r={radius}
                     stroke="#e2e8f0"
-                    strokeWidth="12"
+                    strokeWidth="10"
                     fill="none"
                   />
                   <circle
-                    cx="75"
-                    cy="75"
+                    cx="70"
+                    cy="70"
                     r={radius}
-                    stroke="#6366f1"
-                    strokeWidth="12"
+                    stroke="url(#grad)"
+                    strokeWidth="10"
                     fill="none"
                     strokeDasharray={circumference}
                     strokeDashoffset={offset}
                     strokeLinecap="round"
-                    transform="rotate(-90 75 75)"
+                    transform="rotate(-90 70 70)"
                     style={{ transition: "stroke-dashoffset 1s ease" }}
                   />
+
+                  <defs>
+                    <linearGradient id="grad">
+                      <stop offset="0%" stopColor="#6366f1" />
+                      <stop offset="100%" stopColor="#7c3aed" />
+                    </linearGradient>
+                  </defs>
                 </svg>
 
                 <div style={{
@@ -229,12 +251,12 @@ Looking for HTML, CSS, JavaScript, React.`);
               </div>
             </div>
 
-            {/* RESULT TEXT */}
+            {/* OUTPUT */}
             <pre style={{
               marginTop: "20px",
               background: "#f8fafc",
               padding: "15px",
-              borderRadius: "10px",
+              borderRadius: "12px",
               whiteSpace: "pre-wrap"
             }}>
               {displayed}
